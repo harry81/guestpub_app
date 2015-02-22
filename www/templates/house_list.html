@@ -1,10 +1,10 @@
 <ion-view view-title="Houselists">
   <ion-content>
     <ion-list>
-      <ion-item ng-repeat="houselist in houselists" class="item-thumbnail-left" href="#/app/houselists/{{houselist.id}}">
+      <ion-item ng-repeat="house in houselist" class="item-thumbnail-left" href="#/app/housedetail/{{houselist.id}}">
           <img ng-src="http://ionicframework.com/img/docs/license-to-ill.jpg">
-          <h2>{{houselist.title}}</h2>
-          <p>{{houselist.id}}</p>
+          <h2>{{house.title}}</h2>
+          <p>{{house.id}}</p>
       </ion-item>
     </ion-list>
   </ion-content>

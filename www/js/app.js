@@ -47,25 +47,25 @@ angular.module('starter', ['ionic', 'starter.controllers'])
       }
     }
   })
-    .state('app.houselists', {
-      url: "/houselists",
+    .state('app.houselist', {
+      url: "/houselist",
       views: {
         'menuContent': {
-          templateUrl: "templates/houselists.html",
-          controller: 'HouselistsCtrl'
+          templateUrl: "templates/house_list.html",
+          controller: 'HouselistCtrl'
         }
       }
     })
 
   .state('app.single', {
-    url: "/houselists/:houselistId",
+    url: "/housedetail/:housedetailId",
     views: {
       'menuContent': {
-        templateUrl: "templates/houselist.html",
-        controller: 'HouselistCtrl'
+        templateUrl: "templates/house_detail.html",
+        controller: 'HouseDetailCtrl'
       }
     }
   });
   // if none of the above states are matched, use this as the fallback
-  $urlRouterProvider.otherwise('/app/houselists');
+  $urlRouterProvider.otherwise('/app/houselist');
 });

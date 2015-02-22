@@ -33,8 +33,8 @@ angular.module('starter.controllers', [])
   };
 })
 
-.controller('HouselistsCtrl', function($scope) {
-  $scope.houselists = [
+.controller('HouselistCtrl', function($scope) {
+  $scope.houselist = [
     { title: 'Reggae', id: 1 },
     { title: 'Chill', id: 2 },
     { title: 'Dubstep', id: 3 },
@@ -44,5 +44,5 @@ angular.module('starter.controllers', [])
   ];
 })
 
-.controller('HouselistCtrl', function($scope, $stateParams) {
+.controller('HouseDetailCtrl', function($scope, $stateParams) {
 });
