@@ -33,16 +33,16 @@ angular.module('starter.controllers', [])
   };
 })
 
-.controller('HouselistCtrl', function($scope) {
-  $scope.houselist = [
-    { title: 'Reggae', id: 1 },
-    { title: 'Chill', id: 2 },
-    { title: 'Dubstep', id: 3 },
-    { title: 'Indie', id: 4 },
-    { title: 'Rap', id: 5 },
-    { title: 'Cowbell', id: 6 }
-  ];
+.controller('HouselistCtrl', function($scope, PubService) {
+  var entries = PubService.query( function() {
+      $scope.houselist = entries['results'];
+  });
+
 })
 
-.controller('HouseDetailCtrl', function($scope, $stateParams) {
+
+.controller('HouseDetailCtrl', function($scope, PubService, $stateParams) {
+  var entry = PubService.query({id: $stateParams.housedetailId }, function() {
+      $scope.house = entry;
+  });
 });
