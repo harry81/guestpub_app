@@ -23,7 +23,6 @@ angular.module('starter', ['ionic', 'ngResource', 'starter.controllers', 'starte
 
 .config(function($stateProvider, $urlRouterProvider, $httpProvider) {
     $httpProvider.defaults.useXDomain = true;
-    $httpProvider.defaults.withCredentials = true;
     delete $httpProvider.defaults.headers.common["X-Requested-With"];
 
   $stateProvider
