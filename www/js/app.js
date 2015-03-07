@@ -43,14 +43,6 @@ angular.module('starter', ['ionic', 'ngResource', 'starter.controllers', 'starte
     }
   })
 
-  .state('app.inquiry', {
-    url: "/inquiry",
-    views: {
-      'menuContent': {
-        templateUrl: "templates/inquiry.html"
-      }
-    }
-  })
     .state('app.houselist', {
       url: "/houselist",
       views: {
@@ -69,7 +61,18 @@ angular.module('starter', ['ionic', 'ngResource', 'starter.controllers', 'starte
         controller: 'HouseDetailCtrl'
       }
     }
-  });
+  })
+
+  .state('app.inquiry', {
+    url: "/inquiry",
+    views: {
+      'menuContent': {
+        templateUrl: "templates/inquiry.html",
+        controller : 'InqueryCtrl'
+      }
+    }
+  })
+;
 
 
 

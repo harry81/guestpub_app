@@ -45,4 +45,11 @@ angular.module('starter.controllers', [])
   var entry = PubService.query({id: $stateParams.housedetailId }, function() {
       $scope.house = entry;
   });
+})
+
+.controller('InqueryCtrl', function($scope) {
+    $scope.inquery_submit = function() {
+        console.log('hello', $scope.username);
+        console.log($scope.people)
+    }
 });
