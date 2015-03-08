@@ -59,9 +59,16 @@ angular.module('starter.controllers', [])
   });
 })
 
-.controller('InqueryCtrl', function($scope, MessageService, $ionicPopup, $timeout, $location) {
+.controller('InqueryCtrl', function($scope, MessageService, $ionicPopup, $timeout, $location, PubService, $stateParams, $filter) {
+
+    var entry = PubService.query({id: $stateParams.housedetailId }, function() {
+        $scope.house = entry;
+    });
+
+    $scope.day = $filter("date")(Date.now(), 'MM/dd/yyyy');
     $scope.showPopup = function() {
         $scope.data = {}
+
 
         // An elaborate, custom popup
         var confirmPop = $ionicPopup.show({

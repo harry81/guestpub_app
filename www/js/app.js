@@ -6,7 +6,7 @@
 // 'starter.controllers' is found in controllers.js
 angular.module('starter', ['ionic', 'ngResource', 'starter.controllers', 'starter.services'])
 
-.run(function($ionicPlatform) {
+.run(function($ionicPlatform, $ionicPopup, $state) {
   $ionicPlatform.ready(function() {
     // Hide the accessory bar by default (remove this to show the accessory bar above the keyboard
     // for form inputs)
@@ -18,6 +18,23 @@ angular.module('starter', ['ionic', 'ngResource', 'starter.controllers', 'starte
       StatusBar.styleDefault();
     }
   });
+
+$ionicPlatform.onHardwareBackButton(function (event) {
+      if($state.$current.name=="app.houselist") { // your check here
+          event.preventDefault();
+          event.stopPropagation();
+
+          $ionicPopup.confirm({
+            title: 'System warning',
+            template: 'are you sure you want to exit?'
+          }).then(function(res){
+            if( res ){
+              navigator.app.exitApp();
+            }
+          })
+      }
+  })
+
 })
 
 .config(function($stateProvider, $urlRouterProvider, $httpProvider) {
@@ -63,7 +80,7 @@ angular.module('starter', ['ionic', 'ngResource', 'starter.controllers', 'starte
   })
 
   .state('app.inquiry', {
-    url: "/inquiry",
+    url: "/inquiry/:housedetailId",
     views: {
       'menuContent': {
         templateUrl: "templates/inquiry.html",

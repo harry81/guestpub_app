@@ -1,6 +1,6 @@
 <ion-view view-title="문의하기">
   <ion-content>
-    <h2>함덕제주카약게스트하우스</h2>
+    <h2>{{house.properties.title}}</h2>
     <form name="inquerymessage" ng-submit="inquery_submit()" ng-controller="InqueryCtrl">
     <div class="list">
       <label class="item item-input item-stacked-label">
@@ -9,10 +9,10 @@
       </label>
       <label class="item item-input item-stacked-label">
         <span class="input-label">날짜</span>
-        <input type="text" ng-model="day" placeholder="2015/2/23">
+        <input type="date" ng-model="day" placeholder="2015/2/23">
       </label>
       <label class="item item-input item-stacked-label">
-        <span class="input-label" >남</span>
+        <span class="inp ut-label" >남</span>
         <input type="text" ng-model="num_men" placeholder="10">
       </label>
       <label class="item item-input item-stacked-label">
