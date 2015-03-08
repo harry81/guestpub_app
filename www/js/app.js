@@ -73,8 +73,6 @@ angular.module('starter', ['ionic', 'ngResource', 'starter.controllers', 'starte
   })
 ;
 
-
-
   // if none of the above states are matched, use this as the fallback
   $urlRouterProvider.otherwise('/app/houselist');
 });

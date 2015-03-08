@@ -47,10 +47,33 @@ angular.module('starter.controllers', [])
   });
 })
 
-.controller('InqueryCtrl', function($scope, MessageService) {
+.controller('InqueryCtrl', function($scope, MessageService, $ionicPopup, $timeout, $location) {
+    $scope.showPopup = function() {
+        $scope.data = {}
+
+        // An elaborate, custom popup
+        var confirmPop = $ionicPopup.show({
+            template: '<h2>{{username}}</h2>',
+            title: '문자 전송 완료',
+            // subTitle: 'Please use normal things',
+            scope: $scope,
+            buttons: [
+                {
+                    text: '<b>확인</b>',
+                    type: 'button-positive',
+                }
+            ]
+        });
+        confirmPop.then(function(res) {
+            $location.path('/');
+            console.log('Tapped!', res);
+        });
+        $timeout(function() {
+            confirmPop.close(); //close the popup after 3 seconds for some reason
+        }, 3000);
+    };
+
     $scope.inquery_submit = function() {
-        console.log('submit', $scope.username);
-        console.log($scope.people)
 
         $scope.payload = new MessageService();
         $scope.payload.username = $scope.username;
@@ -60,8 +83,10 @@ angular.module('starter.controllers', [])
         $scope.payload.num_men = $scope.num_men;
         $scope.payload.num_women = $scope.num_women;
         $scope.payload.num_children = $scope.num_children;
+        console.log('submit');
         MessageService.save($scope.payload, function() {
             console.log($scope.payload);
+            $scope.showPopup();
         });
     }
 });
