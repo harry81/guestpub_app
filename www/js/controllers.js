@@ -47,9 +47,21 @@ angular.module('starter.controllers', [])
   });
 })
 
-.controller('InqueryCtrl', function($scope) {
+.controller('InqueryCtrl', function($scope, MessageService) {
     $scope.inquery_submit = function() {
-        console.log('hello', $scope.username);
+        console.log('submit', $scope.username);
         console.log($scope.people)
+
+        $scope.payload = new MessageService();
+        $scope.payload.username = $scope.username;
+        $scope.payload.sender_tel = '01064117846';
+        $scope.payload.receiver_tel = '01000000000';
+        $scope.payload.day = $scope.day;
+        $scope.payload.num_men = $scope.num_men;
+        $scope.payload.num_women = $scope.num_women;
+        $scope.payload.num_children = $scope.num_children;
+        MessageService.save($scope.payload, function() {
+            console.log($scope.payload);
+        });
     }
 });
