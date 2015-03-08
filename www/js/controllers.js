@@ -33,11 +33,23 @@ angular.module('starter.controllers', [])
   };
 })
 
-.controller('HouselistCtrl', function($scope, PubService) {
+.controller('HouselistCtrl', function($scope, PubService, $http) {
+  var next;
   var entries = PubService.query( function() {
       $scope.houselist = entries['results'];
+      next = entries['next'];
   });
-
+    lst = [];
+    $scope.loadMore = function(){
+        if ( next != undefined){
+            $http.get(next).then(function(response){
+                $scope.houselist = $scope.houselist.concat(response['data']['results']);
+                // console.log('response', response['data']['results']);
+                next = response['data']['next'];
+            });
+        }
+        $scope.$broadcast('scroll.infiniteScrollComplete');
+    }
 })
 
 
