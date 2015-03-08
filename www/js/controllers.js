@@ -65,7 +65,6 @@ angular.module('starter.controllers', [])
         $scope.house = entry;
     });
 
-    $scope.day = $filter("date")(Date.now(), 'MM/dd/yyyy');
     $scope.showPopup = function() {
         $scope.data = {}
 
@@ -98,10 +97,11 @@ angular.module('starter.controllers', [])
         $scope.payload.username = $scope.username;
         $scope.payload.sender_tel = '01064117846';
         $scope.payload.receiver_tel = '01000000000';
-        $scope.payload.day = $scope.day;
+        $scope.payload.day = $filter("date")($scope.day, 'MM/dd/yyyy');
         $scope.payload.num_men = $scope.num_men;
         $scope.payload.num_women = $scope.num_women;
         $scope.payload.num_children = $scope.num_children;
+
         console.log('submit');
         MessageService.save($scope.payload, function() {
             console.log($scope.payload);
