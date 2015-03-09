@@ -23,15 +23,7 @@ $ionicPlatform.onHardwareBackButton(function (event) {
       if($state.$current.name=="app.houselist") { // your check here
           event.preventDefault();
           event.stopPropagation();
-
-          $ionicPopup.confirm({
-            title: 'System warning',
-            template: 'are you sure you want to exit?'
-          }).then(function(res){
-            if( res ){
-              navigator.app.exitApp();
-            }
-          })
+          navigator.app.exitApp();
       }
   })
 
