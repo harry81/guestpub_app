@@ -2,9 +2,10 @@
   <ion-content>
     <ion-list>
       <ion-item ng-repeat="house in houselist track by $index " class="item-thumbnail-left" href="#/app/housedetail/{{house.id}}">
-          <img ng-src="http://ionicframework.com/img/docs/license-to-ill.jpg">
+          <img ng-if = "house.properties.imageurl==''" ng-src="http://ionicframework.com/img/docs/license-to-ill.jpg">
+          <img ng-if = "house.properties.imageurl" ng-src="{{house.properties.imageurl}}">
           <h2>{{house.properties.title}}</h2>
-          <p>{{house.id}} {{house.properties.address}}</p>
+          <p>{{house.properties.address}}</p>
       </ion-item>
     </ion-list>
 
