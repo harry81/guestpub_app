@@ -5,7 +5,8 @@
           <img ng-if = "house.properties.imageurl==''" ng-src="http://ionicframework.com/img/docs/license-to-ill.jpg">
           <img ng-if = "house.properties.imageurl" ng-src="{{house.properties.imageurl}}">
           <h2>{{house.properties.title}}</h2>
-          <p>{{house.properties.address}}</p>
+          <p>{{ house.properties.address | limitTo: 20 }}{{house.properties.address.length > 20 ? '...' : ''}}</p>
+
       </ion-item>
     </ion-list>
 
