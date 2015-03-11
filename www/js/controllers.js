@@ -60,24 +60,20 @@ angular.module('starter.controllers', [])
         
         var mapOptions = {
             center: myLatlng,
-            zoom: 10,
+            zoom: 9,
             mapTypeId: google.maps.MapTypeId.ROADMAP
         };
         var map = new google.maps.Map(document.getElementById("map_canvas"),
                                       mapOptions);
-
         $scope.map = map;
     }
     google.maps.event.addDomListener(window, 'load', initialize);
     
-    $scope.clickTest = function() {
-        alert('Example of infowindow with ng-click')
-    };
-
     initialize();
 
     // Load location info
     var entry = PubService.query( function() {
+
         entry['results'].forEach(function(item){
             addMarker($scope.map, item);
         });
@@ -94,18 +90,12 @@ angular.module('starter.controllers', [])
 
         //Marker + infowindow + angularjs compiled ng-click
         var contentString = '<div id="content">'+
-      '<div id="siteNotice">'+
-      '</div>'+
-      '<span><b>' + item["properties"]["title"]  +  '</b></span>'+
-      '<div id="bodyContent"><a href="#/app/housedetail/20034967"> <img src='+ item["properties"]["imageurl"]   + ' width=100></a>'
-      '<p>Attribution: Uluru, <a href="https://en.wikipedia.org/w/index.php?title=Uluru&oldid=297882194">'+
-      'https://en.wikipedia.org/w/index.php?title=Uluru</a> '+
-      '(last visited June 22, 2009).</p>'+
-      '</div>'+
-      '</div>';
+            '<span><b>' + item["properties"]["title"]  +  '</b></span>'+
+            '<div id="bodyContent"><a href="#/app/housedetail/'  + item["id"] + '"> <img src='+ item["properties"]["imageurl"]   + ' width=100></a>' +
+            '</div>'+
+            '</div>';
 
         var compiled = $compile(contentString)($scope);
-
         var infowindow = new google.maps.InfoWindow({
             content: compiled[0]
         });
@@ -113,8 +103,19 @@ angular.module('starter.controllers', [])
         google.maps.event.addListener(marker, 'click', function() {
             infowindow.open(map, marker);
         });
-
     }
+
+    $scope.centerOnMe= function(){
+        $ionicLoading.show({
+            template: 'Loading...'
+        });
+        navigator.geolocation.getCurrentPosition(function(position) {
+            var pos = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+            console.log(pos);
+            $scope.map.setCenter(pos);
+            $ionicLoading.hide();
+        });
+    };
 })
 
 
