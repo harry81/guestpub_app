@@ -52,10 +52,11 @@ angular.module('starter.controllers', [])
     }
 })
 
-
-.controller('HousemapCtrl', function($scope, $ionicLoading, $compile) {
+.controller('HousemapCtrl', function($scope, PubService, $ionicLoading, $compile) {
+    // init map
     function initialize() {
-        var myLatlng = new google.maps.LatLng(44.786683, -101.087618);
+        var myLatlng = new google.maps.LatLng(33.370199, 126.545654);
+        var markerLatlng = new google.maps.LatLng(37.505478, 126.993791);
         
         var mapOptions = {
             center: myLatlng,
@@ -64,26 +65,8 @@ angular.module('starter.controllers', [])
         };
         var map = new google.maps.Map(document.getElementById("map_canvas"),
                                       mapOptions);
-        //Marker + infowindow + angularjs compiled ng-click
-        var contentString = "<div><a ng-click='clickTest()'>Click me!</a></div>";
-        var compiled = $compile(contentString)($scope);
 
-        var infowindow = new google.maps.InfoWindow({
-            content: compiled[0]
-        });
-
-        var marker = new google.maps.Marker({
-            position: myLatlng,
-            map: map,
-            title: 'Uluru (Ayers Rock)'
-        });
-        console.log('map, marker', map, marker);
-
-        google.maps.event.addListener(marker, 'click', function() {
-            infowindow.open(map,marker);
-        });
-
-        $scope.map_canvas = map;
+        $scope.map = map;
     }
     google.maps.event.addDomListener(window, 'load', initialize);
     
@@ -92,6 +75,36 @@ angular.module('starter.controllers', [])
     };
     console.log('map control');
     initialize();
+
+    // Load location info
+    var entry = PubService.query( function() {
+        entry['results'].forEach(function(item){
+            addMarker($scope.map, item);
+        });
+    });
+
+    var addMarker = function(map, item){
+        console.log(item);
+        var markerLatlng = new google.maps.LatLng(item['geometry']['coordinates'][1], item['geometry']['coordinates'][0]);
+
+        var marker = new google.maps.Marker({
+            position: markerLatlng,
+            map: $scope.map,
+            title: item['properties']['title']
+        });
+
+        //Marker + infowindow + angularjs compiled ng-click
+        var contentString = "<div><a ng-click='clickTest()'>Click me!</a></div>";
+        var compiled = $compile(contentString)($scope);
+
+        var infowindow = new google.maps.InfoWindow({
+            content: compiled[0]
+        });
+
+        google.maps.event.addListener(marker, 'click', function() {
+            infowindow.open(map, marker);
+        });
+    }
 })
 
 
