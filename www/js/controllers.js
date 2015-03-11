@@ -67,8 +67,6 @@ angular.module('starter.controllers', [])
                                       mapOptions);
         $scope.map = map;
     }
-    google.maps.event.addDomListener(window, 'load', initialize);
-    
     initialize();
 
     // Load location info
@@ -125,7 +123,7 @@ angular.module('starter.controllers', [])
   });
 })
 
-.controller('InqueryCtrl', function($scope, MessageService, $ionicPopup, $timeout, $location, PubService, $stateParams, $filter) {
+.controller('InqueryCtrl', function($scope, MessageService, $ionicPopup, $timeout, $state, PubService, $stateParams, $filter) {
 
     var entry = PubService.query({id: $stateParams.housedetailId }, function() {
         $scope.house = entry;
@@ -134,10 +132,9 @@ angular.module('starter.controllers', [])
     $scope.showPopup = function() {
         $scope.data = {}
 
-
         // An elaborate, custom popup
         var confirmPop = $ionicPopup.show({
-            template: '<h2>{{username}}</h2>',
+            template: '<h2>{{house.properties.title}}</h2>',
             title: '문자 전송 완료',
             // subTitle: 'Please use normal things',
             scope: $scope,
@@ -149,8 +146,8 @@ angular.module('starter.controllers', [])
             ]
         });
         confirmPop.then(function(res) {
-            $location.path('/');
-            console.log('Tapped!', res);
+            $state.go('app.housemap');
+
         });
         $timeout(function() {
             confirmPop.close(); //close the popup after 3 seconds for some reason
@@ -168,7 +165,6 @@ angular.module('starter.controllers', [])
         $scope.payload.num_women = $scope.num_women;
         $scope.payload.num_children = $scope.num_children;
 
-        console.log('submit');
         MessageService.save($scope.payload, function() {
             console.log($scope.payload);
             $scope.showPopup();

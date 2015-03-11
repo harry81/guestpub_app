@@ -20,7 +20,7 @@ angular.module('starter', ['ionic', 'ngResource', 'starter.controllers', 'starte
   });
 
 $ionicPlatform.onHardwareBackButton(function (event) {
-      if($state.$current.name=="app.houselist") { // your check here
+      if($state.$current.name=="app.housemap") { // your check here
           event.preventDefault();
           event.stopPropagation();
           navigator.app.exitApp();

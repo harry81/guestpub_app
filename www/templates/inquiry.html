@@ -7,21 +7,21 @@
     <div class="list">
       <label class="item item-input">
         <span class="input-label">이름</span>
-        <input type="text" ng-model="username" placeholder="홍길동">
+        <input type="text" required ng-model="username" placeholder="수지">
       </label>
 
       <label class="item item-input ">
         <span class="input-label">전화번호</span>
-        <input type="tel" ng-model="telephone" placeholder="01012341234">
+        <input type="tel" ng-minlength=5 ng-model="telephone" placeholder="00000000000">
       </label>
 
       <label class="item item-input">
         <span class="input-label">날짜</span>
-        <input type="date" ng-model="day" placeholder="2015/2/23">
+        <input type="date" required ng-model="day" >
       </label>
       <label class="item item-input">
         <span class="input-label">기간</span>
-        <input type="number" ng-model="period" placeholder="1">일
+        <input type="number" ng-model="period" placeholder="1" value="1">
       </label>
       <label class="item item-input">
         <span class="input-label" >남</span>
@@ -36,7 +36,7 @@
         <input type="number" ng-model="num_children" placeholder="10">
       </label>
 
-      <input class="button button-block" type="submit" id="submit" value="전송" />
+      <button class="button button-block" ng-disabled="!inquerymessage.$valid" ng-click="inquery_submit()">전송</button>
     </div>
 
     </form>
