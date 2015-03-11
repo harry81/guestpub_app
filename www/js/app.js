@@ -61,6 +61,16 @@ $ionicPlatform.onHardwareBackButton(function (event) {
       }
     })
 
+    .state('app.housemap', {
+      url: "/housemap",
+      views: {
+        'menuContent': {
+          templateUrl: "templates/house_map.html",
+          controller: 'HousemapCtrl'
+        }
+      }
+    })
+
   .state('app.single', {
     url: "/housedetail/:housedetailId",
     views: {
@@ -83,5 +93,5 @@ $ionicPlatform.onHardwareBackButton(function (event) {
 ;
 
   // if none of the above states are matched, use this as the fallback
-  $urlRouterProvider.otherwise('/app/houselist');
+  $urlRouterProvider.otherwise('/app/housemap');
 });

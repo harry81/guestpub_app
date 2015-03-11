@@ -53,6 +53,48 @@ angular.module('starter.controllers', [])
 })
 
 
+.controller('HousemapCtrl', function($scope, $ionicLoading, $compile) {
+    function initialize() {
+        var myLatlng = new google.maps.LatLng(44.786683, -101.087618);
+        
+        var mapOptions = {
+            center: myLatlng,
+            zoom: 8,
+            mapTypeId: google.maps.MapTypeId.ROADMAP
+        };
+        var map = new google.maps.Map(document.getElementById("map_canvas"),
+                                      mapOptions);
+        //Marker + infowindow + angularjs compiled ng-click
+        var contentString = "<div><a ng-click='clickTest()'>Click me!</a></div>";
+        var compiled = $compile(contentString)($scope);
+
+        var infowindow = new google.maps.InfoWindow({
+            content: compiled[0]
+        });
+
+        var marker = new google.maps.Marker({
+            position: myLatlng,
+            map: map,
+            title: 'Uluru (Ayers Rock)'
+        });
+        console.log('map, marker', map, marker);
+
+        google.maps.event.addListener(marker, 'click', function() {
+            infowindow.open(map,marker);
+        });
+
+        $scope.map_canvas = map;
+    }
+    google.maps.event.addDomListener(window, 'load', initialize);
+    
+    $scope.clickTest = function() {
+        alert('Example of infowindow with ng-click')
+    };
+    console.log('map control');
+    initialize();
+})
+
+
 .controller('HouseDetailCtrl', function($scope, PubService, $stateParams) {
   var entry = PubService.query({id: $stateParams.housedetailId }, function() {
       $scope.house = entry;
