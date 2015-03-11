@@ -60,7 +60,7 @@ angular.module('starter.controllers', [])
         
         var mapOptions = {
             center: myLatlng,
-            zoom: 8,
+            zoom: 10,
             mapTypeId: google.maps.MapTypeId.ROADMAP
         };
         var map = new google.maps.Map(document.getElementById("map_canvas"),
@@ -73,7 +73,7 @@ angular.module('starter.controllers', [])
     $scope.clickTest = function() {
         alert('Example of infowindow with ng-click')
     };
-    console.log('map control');
+
     initialize();
 
     // Load location info
@@ -84,7 +84,6 @@ angular.module('starter.controllers', [])
     });
 
     var addMarker = function(map, item){
-        console.log(item);
         var markerLatlng = new google.maps.LatLng(item['geometry']['coordinates'][1], item['geometry']['coordinates'][0]);
 
         var marker = new google.maps.Marker({
@@ -94,7 +93,17 @@ angular.module('starter.controllers', [])
         });
 
         //Marker + infowindow + angularjs compiled ng-click
-        var contentString = "<div><a ng-click='clickTest()'>Click me!</a></div>";
+        var contentString = '<div id="content">'+
+      '<div id="siteNotice">'+
+      '</div>'+
+      '<span><b>' + item["properties"]["title"]  +  '</b></span>'+
+      '<div id="bodyContent"><a href="#/app/housedetail/20034967"> <img src='+ item["properties"]["imageurl"]   + ' width=100></a>'
+      '<p>Attribution: Uluru, <a href="https://en.wikipedia.org/w/index.php?title=Uluru&oldid=297882194">'+
+      'https://en.wikipedia.org/w/index.php?title=Uluru</a> '+
+      '(last visited June 22, 2009).</p>'+
+      '</div>'+
+      '</div>';
+
         var compiled = $compile(contentString)($scope);
 
         var infowindow = new google.maps.InfoWindow({
@@ -104,6 +113,7 @@ angular.module('starter.controllers', [])
         google.maps.event.addListener(marker, 'click', function() {
             infowindow.open(map, marker);
         });
+
     }
 })
 
