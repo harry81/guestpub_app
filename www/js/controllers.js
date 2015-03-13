@@ -69,12 +69,11 @@ angular.module('starter.controllers', [])
     }
     initialize();
 
-    // Load location info
     var entry = PubService.query( function() {
-
         entry['results'].forEach(function(item){
             addMarker($scope.map, item);
         });
+
     });
 
     var addMarker = function(map, item){
@@ -88,9 +87,10 @@ angular.module('starter.controllers', [])
 
         //Marker + infowindow + angularjs compiled ng-click
         var contentString = '<div id="content">'+
-            '<span><b>' + item["properties"]["title"]  +  '</b></span>'+
-            '<div id="bodyContent"><a href="#/app/housedetail/'  + item["id"] + '"> <img src='+ item["properties"]["imageurl"]   + ' width=100></a>' +
-            '</div>'+
+            '<span><b>' + item["properties"]["title"]  + '</b></span>'+
+            '<div id="bodyContent">' +
+            '<a href="#/app/housedetail/' + item["id"] + '"' +
+            '</a>' +  item["properties"]["title"]  + '</a></div>' +
             '</div>';
 
         var compiled = $compile(contentString)($scope);
@@ -114,6 +114,7 @@ angular.module('starter.controllers', [])
             $ionicLoading.hide();
         });
     };
+
 })
 
 
@@ -146,12 +147,8 @@ angular.module('starter.controllers', [])
             ]
         });
         confirmPop.then(function(res) {
-            $state.go('app.housemap');
-
+            $state.go('app.housemap', {}, {location: 'replace'});
         });
-        $timeout(function() {
-            confirmPop.close(); //close the popup after 3 seconds for some reason
-        }, 3000);
     };
 
     $scope.inquery_submit = function() {
@@ -165,8 +162,9 @@ angular.module('starter.controllers', [])
         $scope.payload.num_women = $scope.num_women;
         $scope.payload.num_children = $scope.num_children;
 
-        MessageService.save($scope.payload, function() {
+        MessageService.save($scope.payload, function(response) {
             console.log($scope.payload);
+            console.log(response);
             $scope.showPopup();
         });
     }
