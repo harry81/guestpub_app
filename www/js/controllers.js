@@ -76,6 +76,7 @@ angular.module('starter.controllers', [])
 
     });
 
+    var _infowindow;
     var addMarker = function(map, item){
         var markerLatlng = new google.maps.LatLng(item['geometry']['coordinates'][1], item['geometry']['coordinates'][0]);
 
@@ -86,11 +87,10 @@ angular.module('starter.controllers', [])
         });
 
         //Marker + infowindow + angularjs compiled ng-click
-        var contentString = '<div id="content">'+
-            '<span><b>' + item["properties"]["title"]  + '</b></span>'+
-            '<div id="bodyContent">' +
-            '<a href="#/app/housedetail/' + item["id"] + '"' +
-            '</a>' +  item["properties"]["title"]  + '</a></div>' +
+        contentString = '<div id="content">'+
+            '<span><b>' +
+            '<a href="#/app/housedetail/' + item["id"] + '">' +
+            item["properties"]["title"]  + '</a></b></span>'+
             '</div>';
 
         var compiled = $compile(contentString)($scope);
@@ -99,9 +99,21 @@ angular.module('starter.controllers', [])
         });
 
         google.maps.event.addListener(marker, 'click', function() {
+            closeInfowindow();
             infowindow.open(map, marker);
+            _infowindow = infowindow;
         });
     }
+
+    var closeInfowindow = function(){
+        if ( typeof _infowindow != 'undefined'){
+            _infowindow.close()
+        }
+    }
+
+    google.maps.event.addListener($scope.map, 'click', function() {
+        closeInfowindow();
+    });
 
     $scope.centerOnMe= function(){
         $ionicLoading.show({
@@ -109,7 +121,6 @@ angular.module('starter.controllers', [])
         });
         navigator.geolocation.getCurrentPosition(function(position) {
             var pos = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
-            console.log(pos);
             $scope.map.setCenter(pos);
             $ionicLoading.hide();
         });
