@@ -52,7 +52,8 @@ angular.module('starter.controllers', [])
     }
 })
 
-.controller('HousemapCtrl', function($scope, PubService, $ionicLoading, $compile) {
+.controller('HousemapCtrl', function($scope, PubService, $ionicLoading, $compile, $ionicHistory) {
+    $ionicHistory.clearHistory();
     // init map
     function initialize() {
         var myLatlng = new google.maps.LatLng(33.370199, 126.545654);
@@ -137,7 +138,7 @@ angular.module('starter.controllers', [])
   });
 })
 
-.controller('InqueryCtrl', function($scope, MessageService, $ionicPopup, $timeout, $state, PubService, $stateParams, $filter) {
+.controller('InqueryCtrl', function($scope, MessageService, $ionicPopup, $timeout, $state, PubService, $stateParams, $filter, $ionicViewService) {
 
     var entry = PubService.query({id: $stateParams.housedetailId }, function() {
         $scope.house = entry;
@@ -160,6 +161,9 @@ angular.module('starter.controllers', [])
             ]
         });
         confirmPop.then(function(res) {
+            $ionicViewService.nextViewOptions({
+                disableBack: true
+            });
             $state.go('app.housemap', {}, {location: 'replace'});
         });
     };
