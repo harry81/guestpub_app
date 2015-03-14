@@ -138,7 +138,7 @@ angular.module('starter.controllers', [])
   });
 })
 
-.controller('InqueryCtrl', function($scope, MessageService, $ionicPopup, $timeout, $state, PubService, $stateParams, $filter, $ionicViewService) {
+.controller('InqueryCtrl', function($scope, MessageService, $ionicPopup, $timeout, $state, PubService, $stateParams, $filter, $ionicHistory) {
 
     var entry = PubService.query({id: $stateParams.housedetailId }, function() {
         $scope.house = entry;
@@ -161,7 +161,7 @@ angular.module('starter.controllers', [])
             ]
         });
         confirmPop.then(function(res) {
-            $ionicViewService.nextViewOptions({
+            $ionicHistory.nextViewOptions({
                 disableBack: true
             });
             $state.go('app.housemap', {}, {location: 'replace'});
