@@ -61,7 +61,9 @@ angular.module('starter.controllers', [])
         var mapOptions = {
             center: myLatlng,
             zoom: 9,
-            mapTypeId: google.maps.MapTypeId.ROADMAP
+            mapTypeId: google.maps.MapTypeId.ROADMAP,
+            streetViewControl: false,
+            mapTypeControl: false
         };
         var map = new google.maps.Map(document.getElementById("map_canvas"),
                                       mapOptions);
