@@ -140,7 +140,6 @@ angular.module('starter.controllers', [])
 
 .controller('InqueryCtrl', function($scope, MessageService, $ionicPopup, $timeout, $state, PubService, $stateParams, $filter, $ionicHistory) {
     // init the form values
-    $scope.username = "사용자1"
     $scope.day = new Date();
     $scope.period = 1;
 
