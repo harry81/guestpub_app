@@ -139,6 +139,11 @@ angular.module('starter.controllers', [])
 })
 
 .controller('InqueryCtrl', function($scope, MessageService, $ionicPopup, $timeout, $state, PubService, $stateParams, $filter, $ionicHistory) {
+    // init the form values
+    $scope.username = "사용자1"
+    $scope.day = new Date();
+    $scope.period = 1;
+
 
     var entry = PubService.query({id: $stateParams.housedetailId }, function() {
         $scope.house = entry;
@@ -169,7 +174,6 @@ angular.module('starter.controllers', [])
     };
 
     $scope.inquery_submit = function() {
-
         $scope.payload = new MessageService();
         $scope.payload.username = $scope.username;
         $scope.payload.sender_tel = '01064117846';
