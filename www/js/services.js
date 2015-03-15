@@ -6,6 +6,12 @@ angular.module('starter.services', [])
     }); 
 })
 
+.factory('CommentService', function($resource) {
+    return $resource('http://guestpub.hoodpub.com/api/comment/?pub=:id/',{},{
+        query: {method:'GET', isArray: false}
+    });
+})
+
 .factory('MessageService', function($resource) {
     return $resource('http://guestpub.hoodpub.com/api/message/:id', { id: '@_id' }, {
         update: {

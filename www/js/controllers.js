@@ -132,9 +132,14 @@ angular.module('starter.controllers', [])
 })
 
 
-.controller('HouseDetailCtrl', function($scope, PubService, $stateParams) {
+.controller('HouseDetailCtrl', function($scope, PubService, CommentService, $stateParams) {
   var entry = PubService.query({id: $stateParams.housedetailId }, function() {
       $scope.house = entry;
+  });
+
+  var entries = CommentService.query({id: $stateParams.housedetailId }, function() {
+      $scope.comments = entries['results'];
+      console.log(entries);
   });
 })
 
