@@ -112,7 +112,7 @@ angular.module('starter.controllers', [])
         closeInfowindow();
     });
 
-    google.maps.event.addListener($scope.map, 'bounds_changed', function() {
+    google.maps.event.addListener($scope.map, 'idle', function() {
         var bounds =  $scope.map.getBounds();
 
         var entry = PubService.query( {s: bounds.getSouthWest().lat(),
@@ -148,7 +148,6 @@ angular.module('starter.controllers', [])
 
   var entries = CommentService.query({id: $stateParams.housedetailId }, function() {
       $scope.comments = entries['results'];
-      console.log(entries);
   });
 })
 
@@ -197,8 +196,6 @@ angular.module('starter.controllers', [])
         $scope.payload.num_children = $scope.num_children;
 
         MessageService.save($scope.payload, function(response) {
-            console.log($scope.payload);
-            console.log(response);
             $scope.showPopup();
         });
     }
