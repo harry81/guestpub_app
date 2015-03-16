@@ -54,6 +54,9 @@ angular.module('starter.controllers', [])
 
 .controller('HousemapCtrl', function($scope, PubService, $ionicLoading, $compile, $ionicHistory) {
     $ionicHistory.clearHistory();
+    var _infowindow;
+    var markers = [];
+
     // init map
     function initialize() {
         var myLatlng = new google.maps.LatLng(33.370199, 126.545654);
@@ -75,15 +78,19 @@ angular.module('starter.controllers', [])
         template: 'Loading...'
     });
 
-
-    var _infowindow;
     var addMarker = function(map, item){
+        // check if it is duplicated
+        if (markers.indexOf(item['id']) > 0){
+            return
+        }
+
         var markerLatlng = new google.maps.LatLng(item['geometry']['coordinates'][1], item['geometry']['coordinates'][0]);
 
         var marker = new google.maps.Marker({
             position: markerLatlng,
             map: $scope.map,
-            title: item['properties']['title']
+            title: item['properties']['title'],
+            id: item['id']
         });
 
         //Marker + infowindow + angularjs compiled ng-click
@@ -104,6 +111,7 @@ angular.module('starter.controllers', [])
             infowindow.open(map, marker);
             _infowindow = infowindow;
         });
+        markers.push(marker.id);
     }
 
     var closeInfowindow = function(){
