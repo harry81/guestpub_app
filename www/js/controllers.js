@@ -71,6 +71,10 @@ angular.module('starter.controllers', [])
         $scope.map = map;
     }
     initialize();
+    $ionicLoading.show({
+        template: 'Loading...'
+    });
+
 
     var _infowindow;
     var addMarker = function(map, item){
@@ -113,6 +117,7 @@ angular.module('starter.controllers', [])
     });
 
     google.maps.event.addListener($scope.map, 'idle', function() {
+
         var bounds =  $scope.map.getBounds();
 
         var entry = PubService.query( {s: bounds.getSouthWest().lat(),
@@ -125,7 +130,10 @@ angular.module('starter.controllers', [])
                                           });
 
                                       });
+        $ionicLoading.hide();
+
     });
+
 
     $scope.centerOnMe= function(){
         $ionicLoading.show({
