@@ -1,7 +1,6 @@
 angular.module('starter.services', [])
-
 .factory('PubService', function($resource) {
-    return $resource('http://guestpub.hoodpub.com/api/pub/:id/',{},{
+    return $resource('http://guestpub.hoodpub.com' + '/api/pub/:id/?in_bbox=:w,:s,:e,:n',{},{
         query: {method:'GET', isArray: false}
     }); 
 })

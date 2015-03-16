@@ -72,13 +72,6 @@ angular.module('starter.controllers', [])
     }
     initialize();
 
-    var entry = PubService.query( function() {
-        entry['results'].forEach(function(item){
-            addMarker($scope.map, item);
-        });
-
-    });
-
     var _infowindow;
     var addMarker = function(map, item){
         var markerLatlng = new google.maps.LatLng(item['geometry']['coordinates'][1], item['geometry']['coordinates'][0]);
@@ -117,6 +110,21 @@ angular.module('starter.controllers', [])
 
     google.maps.event.addListener($scope.map, 'click', function() {
         closeInfowindow();
+    });
+
+    google.maps.event.addListener($scope.map, 'bounds_changed', function() {
+        var bounds =  $scope.map.getBounds();
+
+        var entry = PubService.query( {s: bounds.getSouthWest().lat(),
+                                       w: bounds.getSouthWest().lng(),
+                                       n: bounds.getNorthEast().lat(),
+                                       e: bounds.getNorthEast().lng()},
+                                      function() {
+                                          entry['results'].forEach(function(item){
+                                              addMarker($scope.map, item);
+                                          });
+
+                                      });
     });
 
     $scope.centerOnMe= function(){
