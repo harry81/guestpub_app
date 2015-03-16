@@ -93,7 +93,8 @@ angular.module('starter.controllers', [])
         contentString = '<div id="content">'+
             '<span><b>' +
             '<a href="#/app/housedetail/' + item["id"] + '">' +
-            item["properties"]["title"]  + '</a></b></span>'+
+            item["properties"]["title"]  + '</a></b></span> '+
+            item["properties"]['comment_set'].length +
             '</div>';
 
         var compiled = $compile(contentString)($scope);
